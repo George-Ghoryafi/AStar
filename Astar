@@ -91,7 +91,7 @@ class Node:
 		if self.col < self.total_rows - 1 and not grid[self.row][self.col + 1].is_barrier(): #checks box to the right
 			self.neighbors.append(grid[self.row][self.col + 1])
 		
-		if self.row > 0 and not grid[self.row][self.col - 1].is_barrier(): #checks box to the left
+		if self.col > 0 and not grid[self.row][self.col - 1].is_barrier(): #checks box to the left
 			self.neighbors.append(grid[self.row][self.col - 1])		
 
 
@@ -166,12 +166,13 @@ def algorithm(draw, grid, start, end):
 					open_set.put((f_score[neighbor], count, neighbor))
 					open_set_hash.add(neighbor)
 					neighbor.make_open()
-		
+		draw()
+
 		#if what we just checked is not the start node or the end node, close it
 		if current != start:
 			current.make_closed()
 
-
+	return False
 
 
 def make_grid(rows, width):
@@ -191,8 +192,8 @@ def draw_grid(win, rows, width):
 	gap = width // rows 
 	for i in range(rows):
 		pygame.draw.line(win, GREY, (0, i * gap), (width, i * gap))
-	for j in range(rows):
-		pygame.draw.line(win, GREY, (j * gap, 0), (j * gap, width))
+		for j in range(rows):
+			pygame.draw.line(win, GREY, (j * gap, 0), (j * gap, width))
 
 
 
@@ -223,7 +224,7 @@ def get_clicked_position(pos, rows, width):
 
 
 def main(win, width):
-	ROWS = 50
+	ROWS = 50 #changing this will change the size of the graph 
 	grid = make_grid(ROWS, width)
 
 	start = None
